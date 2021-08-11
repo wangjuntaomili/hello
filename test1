@@ -1,0 +1,62 @@
+
+// 每项都单独做查找
+let lookUpMaxGroup = arr => {
+    let rec = [];
+
+    for(let i = 0; i < arr.length; i++) {
+        let sum = arr[i];
+        let tem = {
+            index: i,
+            len: 1,
+            sum: sum
+        };
+        for (let j = i+1; j < arr.length; j++) {
+            if (sum + arr[j] >= sum) {
+                sum += arr[j];
+                tem.len++;
+            }
+            else {
+                break;
+            }
+        }
+        tem.sum = sum;
+        rec.push(tem);
+    }
+
+    console.log(rec);
+}
+
+// 查找数组中是否有负数，有，以负数左右进行分组求和比较
+// 没负数，则整体为最大
+
+let lookUpMaxGroupTwo = arr => {
+    // 如果是空数组，则不判断
+
+    let rec = [];
+    let tem = {
+        sum: 0,
+        len: 1
+    };
+    for (let i = 1; i< arr.length; i++) {
+        
+        if (arr[i] < 0 || i === arr.length - 1) {
+            console.log(tem, i)
+            tem.index = i - tem.len;
+            console.log(tem);
+            rec.push(tem);
+
+            tem.sum = 0;
+            tem.len = 1;
+            continue;
+        }
+        tem.sum += arr[i];
+        tem.len += 1;
+        console.log(tem)
+    }
+
+    console.log(rec);
+}
+
+
+lookUpMaxGroup([1, 2, -1, 3, 4, 7]);
+lookUpMaxGroupTwo([1, 2, -1, 3, 4, 7]);
